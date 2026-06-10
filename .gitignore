@@ -1,0 +1,18 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv312/
+
+# Runtime-generated files
+logs/
+memory/user_preferences.json
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
