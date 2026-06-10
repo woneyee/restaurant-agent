@@ -1,5 +1,6 @@
-# EATO Restaurant Agent
+# Restaurant Agent
 
+이 프로젝트는 오픈소스소프트웨어개발의 일환이며,
 OpenAI와 Google Maps Platform을 활용한 동네 맛집 추천 Multi-Agent 웹앱입니다.
 
 사용자의 자연어 요청에서 지역, 음식 종류, 별점, 가격대, 분위기 조건을 추출하고,
