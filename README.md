@@ -217,29 +217,10 @@ python main.py
 
 CLI에서 위치가 누락되면 지역과 음식 종류를 추가로 질문합니다.
 
-## 제출용 Trace
-
-웹 API 추천 요청이 완료될 때마다 실제 실행 과정이 다음 파일에 저장됩니다.
-
-```text
-logs/submission_trace.json
-logs/submission_trace.md
-```
-
-Trace에는 다음 내용이 포함됩니다.
-
-- Planner가 추출한 요청 조건
-- ReAct Agent가 실제 호출한 도구 이름과 입력값
-- 각 도구의 Observation
-- Reflection 검토 결과
-- fallback 사유와 조건 변경 내용
-- 최종 추천 결과
-
-`logs/`는 실행 중 생성되는 폴더이며 Git에는 커밋되지 않습니다.
 
 ## 테스트
 
-### 지정 시나리오 실행
+### 시나리오 실행
 
 ```bash
 python test_scenario.py
@@ -252,34 +233,6 @@ python test_scenario.py
 너무 비싸지 않고, 리뷰가 좋은 곳 위주로 3곳 추천해줘.
 ```
 
-### Python 문법 검사
-
-```bash
-python -m py_compile api.py main.py test_scenario.py agents/*.py tools/*.py memory/*.py
-```
-
-PowerShell에서는 glob 확장이 다를 수 있으므로 다음과 같이 실행할 수 있습니다.
-
-```powershell
-python -m py_compile api.py main.py test_scenario.py `
-  agents\planner.py agents\react_agent.py agents\reflection_agent.py agents\graph_agent.py `
-  tools\restaurant_search.py tools\rating_filter.py tools\review_analysis.py tools\distance_tool.py `
-  memory\user_memory.py
-```
-
-## 예외 처리
-
-| 상황 | 처리 방식 |
-|---|---|
-| 위치 조건 누락 | 웹 API는 `need_more_info`와 질문을 반환하고, CLI는 추가 입력을 요청 |
-| 존재하지 않는 지역 또는 검색 결과 없음 | 빈 결과와 대안 지역 안내 |
-| 음식 종류 결과 없음 | 다른 음식 종류로 바꾸지 않고 결과 부족으로 처리 |
-| 카페 요청 | Google 장소 유형을 검증하여 카페 결과만 반환 |
-| 별점 조건 | 사용자가 말한 숫자와 `이상/이하/초과/미만` 연산자를 최종 결과에 재검증 |
-| 가격 정보 없음 | 저가로 추정하지 않고 `정보 없음`으로 처리 |
-| Google API 실패 | 로컬 샘플 데이터로 fallback |
-| OpenAI API 실패 또는 도구 미호출 | 규칙 기반 도구 실행으로 fallback |
-| 추천 결과 부족 | Reflection 후 가격·분위기 조건을 완화하여 한 번 재검색 |
 
 ## 프로젝트 구조
 
